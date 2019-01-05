@@ -260,7 +260,6 @@ func insertToMysql() {
 			gatewayStart := time.Now()
 
 			m := map[string]interface{}{"gtw_id": gateway.GtwID, "x": tile.X, "y": tile.Y}
-			log.Printf("%v", m)
 			var entry = types.MysqlAggGridcell{}
 
 			selectStart := time.Now()
@@ -273,7 +272,6 @@ func insertToMysql() {
 			selectElapsed := time.Since(selectStart)
 			selectDuration.Observe(float64(selectElapsed) / 1000.0 / 1000.0)
 
-			log.Printf("%v", entry)
 			updateEntry(&entry, message, gateway)
 
 			updateStart := time.Now()
