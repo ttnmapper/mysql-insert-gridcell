@@ -31,6 +31,14 @@ type MysqlAggGridcell struct {
 	BucketNoSignal int64 `db:"bucket_no_signal"`
 }
 
+type MysqlTileToRedraw struct {
+	Id         int       `db:"id"`
+	X          int       `db:"x"`
+	Y          int       `db:"y"`
+	Z          int       `db:"z"`
+	LastQueued time.Time `db:"last_queued"`
+}
+
 type NullTime struct {
 	Time  time.Time
 	Valid bool // Valid is true if Time is not NULL

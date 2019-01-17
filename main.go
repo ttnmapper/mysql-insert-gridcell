@@ -117,6 +117,9 @@ func main() {
 	// Start hread to handle MySQL inserts
 	go insertToMysql()
 
+	// Start thread to queue already processed messages for tile redrawing
+	go processQueueForUpdate()
+
 	// Start amqp listener on this thread - blocking function
 	subscribeToRabbit()
 }
@@ -318,6 +321,9 @@ func insertToMysql() {
 
 			gatewayElapsed := time.Since(gatewayStart)
 			gatewayDuration.Observe(float64(gatewayElapsed.Nanoseconds()) / 1000.0 / 1000.0) //nanoseconds to milliseconds
+
+			// Use the current message's coordiantes to queue the redrawing of a tile map tile
+			queueForUpdateChannel <- message
 		}
 
 	}
@@ -346,27 +352,27 @@ func updateEntry(entry *types.MysqlAggGridcell, message types.TtnMapperUplinkMes
 		signal += gateway.SNR
 	}
 
-	if signal > -97.5 {
+	if signal > -95 {
 		entry.BucketHigh++
-	} else if signal > -102.5 {
+	} else if signal > -100 {
 		entry.Bucket100++
-	} else if signal > -107.5 {
+	} else if signal > -105 {
 		entry.Bucket105++
-	} else if signal > -112.5 {
+	} else if signal > -110 {
 		entry.Bucket110++
-	} else if signal > -117.5 {
+	} else if signal > -115 {
 		entry.Bucket115++
-	} else if signal > -122.5 {
+	} else if signal > -120 {
 		entry.Bucket120++
-	} else if signal > -127.5 {
+	} else if signal > -125 {
 		entry.Bucket125++
-	} else if signal > -132.5 {
+	} else if signal > -130 {
 		entry.Bucket130++
-	} else if signal > -137.5 {
+	} else if signal > -135 {
 		entry.Bucket135++
-	} else if signal > -142.5 {
+	} else if signal > -140 {
 		entry.Bucket140++
-	} else if signal > -147.5 {
+	} else if signal > -145 {
 		entry.Bucket145++
 	} else {
 		entry.BucketLow++
