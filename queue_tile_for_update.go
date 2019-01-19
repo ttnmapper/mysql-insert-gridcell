@@ -70,7 +70,7 @@ func updateTileEntry(x int, y int, z int) {
 		//log.Print("[TMS Queue] " + err.Error())
 	}
 
-	if entry.X != z || entry.Y != y || entry.Z != z {
+	if entry.X != x || entry.Y != y || entry.Z != z {
 
 		entry.X = x
 		entry.Y = y
