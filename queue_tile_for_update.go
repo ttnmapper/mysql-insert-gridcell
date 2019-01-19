@@ -19,17 +19,7 @@ func processQueueForUpdate() {
 		for i := 1; i <= 19; i++ {
 			tile := gosm.NewTileWithLatLong(message.TtnMLatitude, message.TtnMLongitude, i)
 
-			updateTileEntry(tile.X-1, tile.Y-1, tile.Z)
-			updateTileEntry(tile.X-1, tile.Y, tile.Z)
-			updateTileEntry(tile.X-1, tile.Y+1, tile.Z)
-
-			updateTileEntry(tile.X, tile.Y-1, tile.Z)
 			updateTileEntry(tile.X, tile.Y, tile.Z)
-			updateTileEntry(tile.X, tile.Y+1, tile.Z)
-
-			updateTileEntry(tile.X+1, tile.Y-1, tile.Z)
-			updateTileEntry(tile.X+1, tile.Y, tile.Z)
-			updateTileEntry(tile.X+1, tile.Y+1, tile.Z)
 
 		}
 		log.Printf("   [TMS Queue] Added to redraw tile queue")
